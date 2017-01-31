@@ -1,0 +1,30 @@
+
+<!DOCTYPE html>
+<html lang="en" >
+  <head>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="angular-material/angular-material.css">
+
+    <title>Home Controller</title>
+  </head>
+  <body
+    ng-app="app"
+    ng-cloak 
+    ng-controller="AccountsController as accounts">
+        <ng-view layout="row" style="height: 100%;">
+          View content
+        </ng-view>
+
+  <!--Angular, etc /--> 
+  <script src="angular/angular.js" charset="utf-8"></script>
+  <script src="angular-route/angular-route.js" charset="utf-8"></script>
+  <script src="angular-aria/angular-aria.js"></script>
+  <script src="angular-animate/angular-animate.js"></script>
+  <script src="angular-material/angular-material.js"></script>
+  <!-- Local js stuff /-->
+  <script src="app.js" charset="utf-8"></script>
+  <script src="accounts/accounts-controller.js" charset="utf-8"></script>
+  <script src="accounts/accounts-service.js" charset="utf-8"></script>
+  <script src="dashboard/dashboard-controller.js" charset="utf-8"></script>
+  </body>
+</html>
