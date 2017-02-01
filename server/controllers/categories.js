@@ -7,14 +7,20 @@ function CategoryController(){
 
   this.getCategories = function(req, res){
     console.log("params id:", req.params.id)
-    Category.find({_user: req.params.id}, function(err, categories){
-      if ( err ){
-        res.json({err: err, success: null});
-      } else {
-        res.json({err: null, success: categories});
-      };
-    });
-  }; //End this.index
+    Category.find({_user: req.params.id})
+        .populate({
+            path: '_events',
+            model: 'Event',
+        })
+        .exec(
+            function(err, categories){
+            if ( err ){
+                res.json({err: err, success: null});
+            } else {
+                res.json({err: null, success: categories});
+            };
+        });
+  }; //End this.getCategories
 
   this.getCategory = function(req, res){
     Category.findOne( req.body , function(err, user){

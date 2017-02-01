@@ -7,11 +7,6 @@
 </md-toolbar>
 <md-content layout-padding>
   <div layout="column" layout-align="top center">
-    <p>
-    The left sidenav will 'lock open' on a medium (>=960px wide) device.
-    </p>
-    <p>
-    The right sidenav will focus on a specific child element.
-    </p>
+    <p ng-repeat="category in accounts.categories">{{ category.name }}: {{category.totalMinutes}} Minutes accured.</p>
   </div>
 </md-content>

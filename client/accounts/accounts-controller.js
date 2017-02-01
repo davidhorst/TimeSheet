@@ -8,7 +8,8 @@
   AccountsController.$inject = [
     'accountsdataservice',
     'categorydataservice', 
-    '$location', 
+    '$location',
+    '$route', 
     '$mdDialog', 
     '$mdSidenav'
     ];
@@ -16,7 +17,8 @@
   function AccountsController(
     accountsdataervice,
     categorydataservice, 
-    $location, 
+    $location,
+    $route, 
     $mdDialog, 
     $mdSidenav) {
 
@@ -31,6 +33,8 @@
     vm.categories = {};
     vm.toolbarHeading = "Dashboard";
     vm.showCategory = showCategory;
+    vm.goHome = goHome;
+    vm.totalEventMinutes = totalEventMinutes;
 
     activate()
 
@@ -40,6 +44,11 @@
       if(!accountsdataervice.getUser()){
         $location.url('/login');
       }
+    }
+
+    function goHome(){
+      vm.closeMenu();
+      $location.url('/dashboard')
     }
 
     function showLogin(ev) {
@@ -60,14 +69,30 @@
               return categorydataservice.getCategories(response._id)
                 .then(function(returnedCategories){
                   console.log("returned Categories: ", returnedCategories)
-                  vm.categories = returnedCategories.success;
+                  vm.categories = returnedCategories;
                   console.log(vm.categories);
+                  vm.totalEventMinutes();
                 });
             })
         }, function() {
           vm.status = 'You didn\'t name your dog.';
       });
     };
+
+    function totalEventMinutes(){
+        console.log("starting update: ", vm.categories)
+        var totalMinutes = 0;
+        for (var i = 0; i < vm.categories.length; i++){
+            for(var p = 0; p < vm.categories[i]._events.length; p++){
+            
+                var convertHours = vm.categories[i]._events[p].hours * 60;
+                totalMinutes += convertHours;
+                totalMinutes += vm.categories[i]._events[p].minutes;
+            }
+            vm.categories[i].totalMinutes = totalMinutes;
+        }
+        console.log("after conversion", vm.categories);
+    }
 
     function toggleMenu(navID) {
        $mdSidenav('left').toggle()
@@ -122,7 +147,8 @@
       vm.toolbarHeading = vm.categories[index].name;
       categorydataservice.setCategory(index);
       $location.url('/category');
-      console.log(index);
+      $route.reload();
+      // console.log(index);
     }
 
   }

@@ -1,5 +1,6 @@
 var accounts = require('./../controllers/accounts.js'),
-    categories = require('./../controllers/categories.js');
+    categories = require('./../controllers/categories.js'),
+    events = require('./../controllers/events.js');
 
 // define routes
 module.exports = function(app){
@@ -12,8 +13,10 @@ module.exports = function(app){
   app.get('/categories/:id', categories.getCategories);
   app.post('/categories', categories.addCategory); 
 
-//   // Show/add answers
-//   app.post('/questions/:id', questions.createAnswer);
+  app.post('/events', events.addEvent);
+  app.delete('/events/:id', events.deleteEvent);
+  // Event Routes
+  // app.post('/eve/:id', questions.createAnswer);
 //   app.get('/questions/:id', questions.showQuestion);
   
 //   // Show/Add questions

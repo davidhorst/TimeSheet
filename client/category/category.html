@@ -5,23 +5,27 @@
   </md-button>
   <h1 class="md-toolbar-tools">{{ accounts.toolbarHeading }}</h1>
 </md-toolbar>
-<md-content layout-padding>
-  <div layout="column" layout-align="top center">
-      <md-button class="md-button md-primary" ng-click="vm.showEvent($event)">Log an Event</md-button>
-    <md-list ng-cloak>
-        <md-list-item class="secondary-button-padding" ng-click="doPrimaryAction($event)">
-            <p>Click anywhere to fire the primary action, or the button to fire the secondary</p>
-            <md-button class="md-secondary" ng-click="doSecondaryAction($event)">More Info</md-button>
-        </md-list-item>
-        <md-list-item class="secondary-button-padding" ng-click="doPrimaryAction($event)">
-            <p>Click anywhere to fire the primary action, or the button to fire the secondary</p>
-            <md-button class="md-secondary" ng-click="doSecondaryAction($event)">More Info</md-button>
-        </md-list-item>
-        <md-list-item class="secondary-button-padding" ng-click="doPrimaryAction($event)">
-            <p>Click anywhere to fire the primary action, or the button to fire the secondary</p>
-            <md-button class="md-secondary" ng-click="doSecondaryAction($event)">More Info</md-button>
-        </md-list-item>
-    </md-list>
-    <md-datepicker ng-model="vm.event.date" md-placeholder="Enter date"></md-datepicker>
-  </div>
+<md-content layout="column" layout-padding layout-align="top center">
+
+    <md-button class="md-raised md-primary" ng-click="vm.showEventDialog($event)">Log an Event</md-button>
+    <div layout="row" layout-fill layout-align="center center">
+        <md-list flex-gt-sm="75" flex ng-cloak>
+            <md-divider flex></md-divider>
+            <md-list-item flex class="secondary-button-padding" ng-repeat="event in vm.events" ng-click="null">
+                <div flex class="md-list-item-text" layout="column">
+                    <p flex-xs="100">{{ event.description }}</p>
+                    <span flex></span>
+                    <p flex-xs="100">Duration (HH:MM): {{ event.hours }}:{{ event.minutes }}</p>
+                    <span flex hide-gt-xs>
+                </div>
+                <md-button ng-click="vm.showEventDialog($event, $index)" aria-label="edit" class="md-icon-button">
+                    <md-icon md-font-set="material-icons"> edit </md-icon>
+                </md-button>
+                <md-button ng-click="vm.showConfirmDelete($event, $index)" aria-label="delete" class="md-icon-button">
+                    <md-icon md-font-set="material-icons"> delete </md-icon>
+                </md-button>
+                <md-divider flex></md-divider>
+            </md-list-item>
+        </md-list>
+    </div>
 </md-content>

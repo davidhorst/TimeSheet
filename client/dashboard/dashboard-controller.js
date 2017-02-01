@@ -5,12 +5,14 @@
 
   .controller('dashboardController', dashboardController);
 
-  // dashboardController.$inject = ['socketFactory'];
+  dashboardController.$inject = ['categorydataservice'];
 
-  function dashboardController() {
+  function dashboardController(categorydataservice) {
 
     var vm = this;
-    vm.determinateValue = 30;
+    // vm.categories = categorydataservice.getCategories();
+  
+    
   //   vm.toggleSwitch = toggleSwitch;
   //   vm.switches = {};
 

@@ -1,27 +1,37 @@
 <md-dialog aria-label="Mango (Fruit)">
   <form ng-cloak>
     <md-dialog-content>
-      
-      <h2>Event Details</h2>
- 
-        <md-input-container>
-          <label>Enter date</label>
-          <md-datepicker ng-model="ctrl.event.date" md-placeholder="Enter date"></md-datepicker>
-        </md-input-container>
-        <md-input-container class="md-block" flex-gt-xs>
-          <label>Company (Disabled)</label>
-          <input ng-model="user.company">
-        </md-input-container>
+      <div class="md-dialog-content">
+        <h2>Log Entry Details</h2>
+        <div layout-gt-xs="row">
+          <md-input-container class="md-block" flex-gt-sm>
+            <label>Description</label>
+            <input ng-model="event.description">
+          </md-input-container>
 
+          <md-input-container class="md-block" flex-gt-sm>
+            <label>Enter date</label>
+            <md-datepicker ng-model="event.date"></md-datepicker>
+          </md-input-container>
+          <md-input-container class="md-block" flex-gt-sm="10">
+            <label>Hours</label>
+            <input type="number" min="0" ng-model="event.hours">
+          </md-input-container>
+          <md-input-container class="md-block" flex-gt-sm="10">
+            <label>Minutes</label>
+            <input type="number" min="0" max="60" ng-model="event.minutes" title="minutes must be between 0 and 60">
+          </md-input-container>
+        </div>
+      </div>
     </md-dialog-content>
 
     <md-dialog-actions layout="row">
       <span flex></span>
-      <md-button ng-click="answer('not useful')">
-        Not Useful
+      <md-button ng-click="cancel()">
+        Cancel
       </md-button>
-      <md-button ng-click="answer('useful')" class="md-primary">
-          Useful
+      <md-button ng-click="submitEvent(true)" class="md-primary">
+        Save
       </md-button>
     </md-dialog-actions>
   </form>

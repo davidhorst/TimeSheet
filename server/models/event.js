@@ -8,6 +8,7 @@ var EventSchema = new Schema({
   _category: {type: Schema.Types.ObjectId, ref: 'Category'},
   date: {type: Date},
   hours: {type: Number},
+  minutes: {type: Number},
   description: {
       type: String,
       required: true,
