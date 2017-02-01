@@ -10,8 +10,17 @@ app.config(function ($routeProvider) {
     .when('/login',{
         templateUrl: 'accounts/accounts.html'
     })
+    .when('/category',{
+        templateUrl: 'category/category.html',
+        controller:  'categoryController',
+        controllerAs: 'vm',
+    })
 
     .otherwise({
       redirectTo: '/'
     });
+});
+
+app.config(function($compileProvider) {
+    $compileProvider.preAssignBindingsEnabled(true);
 });

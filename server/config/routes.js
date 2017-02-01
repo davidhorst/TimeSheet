@@ -1,5 +1,5 @@
-var accounts = require('./../controllers/accounts.js')
-//     questions = require('./../controllers/questions.js');
+var accounts = require('./../controllers/accounts.js'),
+    categories = require('./../controllers/categories.js');
 
 // define routes
 module.exports = function(app){
@@ -8,9 +8,10 @@ module.exports = function(app){
   app.get('/users/:id', accounts.getUser)
   app.post('/login', accounts.login);
   
-//   // Dashboard Routes
-//   app.get('/questions', questions.index);
-  
+  // Category Routes
+  app.get('/categories/:id', categories.getCategories);
+  app.post('/categories', categories.addCategory); 
+
 //   // Show/add answers
 //   app.post('/questions/:id', questions.createAnswer);
 //   app.get('/questions/:id', questions.showQuestion);

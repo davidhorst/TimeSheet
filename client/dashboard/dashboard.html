@@ -1,21 +1,17 @@
-<div flex layout="column">
-    <md-toolbar layout="row" class="md-hue-2">
-      <div class="md-toolbar-tools">
-
-        <h2>
-          <span>Innovation Clinic Hours</span>
-        </h2>
-        <span flex></span>
-
-      </div>
-    </md-toolbar>
-    <br>
-    <md-content flex layout="row" layout-align="center start" layout-margin>
-        <md-whiteframe class="md-whiteframe-2dp" flex-sm="100" flex-gt-sm="30" flex-gt-md="20" layout layout-align="center center">
-          <md-button class="md-raised md-primary">Primary</md-button>
-        </md-whiteframe>
-        <md-whiteframe class="md-whiteframe-2dp" flex-sm="100" flex-gt-sm="70" flex-gt-md="80" layout layout-align="center center">
-          <md-progress-linear md-mode="determinate" value="{{vm.determinateValue}}"></md-progress-linear>
-        </md-whiteframe>
-    </md-content>
-</div>
+<md-toolbar layout="row" layout-align="start center" class="md-theme-indigo">
+  <md-button ng-click="accounts.toggleMenu()"
+    class="md-icon-button" hide-gt-md>
+    <i class="material-icons">menu</i>
+  </md-button>
+  <h1 class="md-toolbar-tools">{{ accounts.toolbarHeading }}</h1>
+</md-toolbar>
+<md-content layout-padding>
+  <div layout="column" layout-align="top center">
+    <p>
+    The left sidenav will 'lock open' on a medium (>=960px wide) device.
+    </p>
+    <p>
+    The right sidenav will focus on a specific child element.
+    </p>
+  </div>
+</md-content>

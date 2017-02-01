@@ -1,0 +1,27 @@
+<md-toolbar layout="row" layout-align="start center" class="md-theme-indigo">
+  <md-button ng-click="accounts.toggleMenu()"
+    class="md-icon-button" hide-gt-md>
+    <i class="material-icons">menu</i>
+  </md-button>
+  <h1 class="md-toolbar-tools">{{ accounts.toolbarHeading }}</h1>
+</md-toolbar>
+<md-content layout-padding>
+  <div layout="column" layout-align="top center">
+      <md-button class="md-button md-primary" ng-click="vm.showEvent($event)">Log an Event</md-button>
+    <md-list ng-cloak>
+        <md-list-item class="secondary-button-padding" ng-click="doPrimaryAction($event)">
+            <p>Click anywhere to fire the primary action, or the button to fire the secondary</p>
+            <md-button class="md-secondary" ng-click="doSecondaryAction($event)">More Info</md-button>
+        </md-list-item>
+        <md-list-item class="secondary-button-padding" ng-click="doPrimaryAction($event)">
+            <p>Click anywhere to fire the primary action, or the button to fire the secondary</p>
+            <md-button class="md-secondary" ng-click="doSecondaryAction($event)">More Info</md-button>
+        </md-list-item>
+        <md-list-item class="secondary-button-padding" ng-click="doPrimaryAction($event)">
+            <p>Click anywhere to fire the primary action, or the button to fire the secondary</p>
+            <md-button class="md-secondary" ng-click="doSecondaryAction($event)">More Info</md-button>
+        </md-list-item>
+    </md-list>
+    <md-datepicker ng-model="vm.event.date" md-placeholder="Enter date"></md-datepicker>
+  </div>
+</md-content>

@@ -3,16 +3,13 @@ var mongoose = require('mongoose'),
     Schema = mongoose.Schema
 
 // Set schema
-var EventSchema = new Schema({
+var CategorySchema = new Schema({
   _user: {type: Schema.Types.ObjectId, ref: 'User'},
-  _category: {type: Schema.Types.ObjectId, ref: 'Category'},
-  date: {type: Date},
-  hours: {type: Number},
-  description: {
+  _events: [{type: Schema.Types.ObjectId, ref: 'Event'}],
+  name: {
       type: String,
       required: true,
       minlength:5},
-  logged: {type: Boolean},
   }, {timestamps: true});
 
-module.exports = mongoose.model('Event', EventSchema);
+module.exports = mongoose.model('Category', CategorySchema);
