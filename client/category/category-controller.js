@@ -116,7 +116,14 @@
       if (!eventObj._user){
         eventObj._user = accountsdataservice.getUser()._id
       };
-      // console.log(eventObj);
+      if (!eventObj.hours){
+        eventObj.hours = 0;
+      }
+      if(!eventObj.minutes){
+        eventObj.minutes = 0;
+      }
+      eventObj.totalMinutes = eventObj.minutes + eventObj.hours * 60;
+
       return categorydataservice.addEvent(eventObj)
         .then(addEventSuccess)
         .catch(addEventFail)

@@ -5,37 +5,24 @@
 
   .controller('dashboardController', dashboardController);
 
-  dashboardController.$inject = ['categorydataservice'];
+  dashboardController.$inject = ['categorydataservice', 'accountsdataservice'];
 
-  function dashboardController(categorydataservice) {
+  function dashboardController(categorydataservice, accountsdataservice) {
 
     var vm = this;
-    // vm.categories = categorydataservice.getCategories();
-  
+
+    vm.categories = {};
+
+    function activate(){
+      var userID = accountsdataservice.getUser()._id
+      return categorydataservice.getCategories(userID)
+        .then(function(returnedData){
+          vm.categories = returnedData;
+        })
+    }
+
+    activate();
     
-  //   vm.toggleSwitch = toggleSwitch;
-  //   vm.switches = {};
-
-  //   activate()
-
-  //   function toggleSwitch(switchID){
-  //     console.log(switchID, "triggered emit");
-  //     var cmd = {switch: switchID, status: vm.switches[switchID].status}
-  //     console.log("sent cmd", cmd);
-  //     socketFactory.emit("toggleSwitch", cmd, function(data){
-  //     })
-  //   }
-
-  //   // Socket Listeners
-  //   socketFactory.on("switchStatus", function(data){
-  //     vm.switches = data;
-  //     console.log("updating switches")
-  //   });
-
-  //   // // Private Methods
-  //   function activate(){
-  //     socketFactory.init();
-  //   }
   }
 
 })();

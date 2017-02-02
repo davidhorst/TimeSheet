@@ -7,6 +7,7 @@
 </md-toolbar>
 <md-content layout-padding>
   <div layout="column" layout-align="top center">
-    <p ng-repeat="category in accounts.categories">{{ category.name }}: {{category.totalMinutes}} Minutes accured.</p>
+    {{ vm.test }}
+    <p ng-repeat="category in vm.categories">{{ category.name }}: {{category.totalMinutes}} Minutes accured.</p>
   </div>
 </md-content>

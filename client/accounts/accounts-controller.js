@@ -34,7 +34,7 @@
     vm.toolbarHeading = "Dashboard";
     vm.showCategory = showCategory;
     vm.goHome = goHome;
-    vm.totalEventMinutes = totalEventMinutes;
+    // vm.totalEventMinutes = totalEventMinutes;
 
     activate()
 
@@ -49,6 +49,7 @@
     function goHome(){
       vm.closeMenu();
       $location.url('/dashboard')
+      $route.reload();
     }
 
     function showLogin(ev) {
@@ -68,31 +69,14 @@
               // populate categories for sidenav
               return categorydataservice.getCategories(response._id)
                 .then(function(returnedCategories){
-                  console.log("returned Categories: ", returnedCategories)
                   vm.categories = returnedCategories;
-                  console.log(vm.categories);
-                  vm.totalEventMinutes();
+
                 });
             })
         }, function() {
           vm.status = 'You didn\'t name your dog.';
       });
     };
-
-    function totalEventMinutes(){
-        console.log("starting update: ", vm.categories)
-        var totalMinutes = 0;
-        for (var i = 0; i < vm.categories.length; i++){
-            for(var p = 0; p < vm.categories[i]._events.length; p++){
-            
-                var convertHours = vm.categories[i]._events[p].hours * 60;
-                totalMinutes += convertHours;
-                totalMinutes += vm.categories[i]._events[p].minutes;
-            }
-            vm.categories[i].totalMinutes = totalMinutes;
-        }
-        console.log("after conversion", vm.categories);
-    }
 
     function toggleMenu(navID) {
        $mdSidenav('left').toggle()
@@ -127,13 +111,14 @@
             console.log("Added Category: ", response);
               return categorydataservice.getCategories(response.success._user)
                 .then(function(returnedCategories){
-                  // console.log("returned Categories: ", returnedCategories)
-                  vm.categories = returnedCategories.success;
+                  console.log("returned Categories: ", returnedCategories)
+                  vm.categories = returnedCategories;
                   vm.toggleMenu('left')
                 });
           }
 
           function addCategoryFail(response){
+            console.log("add cat fail: ", response);
             pass;  
           }
 

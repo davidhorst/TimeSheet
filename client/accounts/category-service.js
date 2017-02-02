@@ -7,9 +7,9 @@ categorydataservice.$inject = ['$http'];
 function categorydataservice($http) {
 
     var self = this;
-    // self.observerCallbacks = [];
-    self.categories = {};
-    self.currentCategory = null;
+    self.categories = {}; 
+    self.currentCategory = null; // index of current category
+
     return {
         getCategories: getCategories,
         addCategory: addCategory,
@@ -21,48 +21,19 @@ function categorydataservice($http) {
 
 
     function setCategory(index){
-        // console.log(index);
         self.currentCategory = index;
-        // self.notifyObservers();
     }
 
-    function includeMinuteTotals(){
-        console.log("starting update: ", self.categories)
-        var totalMinutes = 0;
-        for (var i = 0; i < self.categories.length; i++){
-            for(var p = 0; p < self.categories._events.length; p++){
-                var convertHours = self.categories._events[p].hours * 60;
-                totalMinutes += convertHours;
-                totalMinutes += self.categories._events[p].minutes;
+    function includeMinuteTotals(categoriesArr){
+        for (var i = 0; i < categoriesArr.length; i++){
+            var totalMinutes = 0;
+            for(var p = 0; p < categoriesArr[i]._events.length; p++){
+                totalMinutes += categoriesArr[i]._events[p].totalMinutes;
             }
-            self.categories[i].totalMinutes = totalMinutes;
-        }
-        console.log("after conversion", self.categories);
-
-        return self.categories;
-    }
-
-    function getEvents(){
-        return self.categories[self.currentCategory]._events
-    }
-
-    function getCategories(userID) {
-        console.log(userID);
-        return $http.get(`categories/${userID}`)
-            .then(getCategoriesComplete)
-            .catch(getCategoriesFailed)
-
-        function getCategoriesComplete(response){
-            console.log(response)
-            self.categories = response.data.success;
-            // includeMinuteTotals();
-            console.log(self.categories)
-            return self.categories;
+            categoriesArr[i].totalMinutes = totalMinutes;
         }
 
-        function getCategoriesFailed(error){
-            console.log('Account Creation Failed with: ' + error.data);
-        }
+        return categoriesArr;
     }
 
     function addCategory(categoryObj) {
@@ -71,47 +42,59 @@ function categorydataservice($http) {
             .catch(addCategoryFailed);
         
         function addCategoryComplete(response) {
-            console.log(response)
-            return response.data;
+            // console.log(response)
+            return response.data;  // just the new category object?
         }
         function addCategoryFailed(error) {
-            console.log('Account Creation Failed with: ' + error.data);
+            console.log('add Category Failed with: ' + error);
         }
+    }
+
+    function getCategories(userID) {
+        return $http.get(`categories/${userID}`)
+            .then(getCategoriesComplete)
+            .catch(getCategoriesFailed)
+
+        function getCategoriesComplete(response){
+            self.categories = includeMinuteTotals(response.data.success);
+            return self.categories;
+        }
+
+        function getCategoriesFailed(error){
+            console.log('Get Categories failed with  ' + error);
+        }
+    }
+
+    function getEvents(){
+        return self.categories[self.currentCategory]._events
     }
 
     function addEvent(eventObj) {
         if (!eventObj._category){
             eventObj._category = self.categories[self.currentCategory]._id
         }
-        // console.log("eventObj at categoryController: ", eventObj);
         return $http.post(`events/`, eventObj)
             .then(addEventComplete)
             .catch(addEventFailed);
         
         function addEventComplete(response) {
-            console.log(response)
             return response.data;
         }
         function addEventFailed(error) {
-            console.log('Account Creation Failed with: ' + error.data);
+            console.log('add event Failed with: ' + error);
         }
     }
 
     function deleteEvent(eventID) {
-        // if (!eventObj._category){
-        //     eventObj._category = self.categories[self.currentCategory]._id
-        // }
-        // console.log("eventObj at categoryController: ", eventObj);
         return $http.delete(`events/${eventID}`)
             .then(deleteEventComplete)
             .catch(deleteEventFailed);
         
         function deleteEventComplete(response) {
-            console.log("after delete: ", response)
             return response.data;
         }
         function deleteEventFailed(error) {
-            console.log('Account Creation Failed with: ' + error);
+            console.log('Delete event Failed with: ' + error);
         }
     }
 }
