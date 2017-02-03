@@ -48,6 +48,7 @@
 
     function goHome(){
       vm.closeMenu();
+      vm.toolbarHeading = "Dashboard";
       $location.url('/dashboard')
       $route.reload();
     }

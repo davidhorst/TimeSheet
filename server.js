@@ -11,6 +11,7 @@ var bodyParser = require('body-parser');
 // Static Files
 app.use( express.static( path.join( root, 'client' )));
 app.use( express.static( path.join( root, 'bower_components' )));
+app.use( express.static( path.join( root, 'node_modules' )));
 
 
 // Config

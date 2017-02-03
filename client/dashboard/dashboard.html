@@ -7,7 +7,11 @@
 </md-toolbar>
 <md-content layout-padding>
   <div layout="column" layout-align="top center">
-    {{ vm.test }}
-    <p ng-repeat="category in vm.categories">{{ category.name }}: {{category.totalMinutes}} Minutes accured.</p>
+    <div flex flex-gt-md="20">
+      <canvas id="doughnut" class="chart chart-doughnut"
+        chart-data="vm.chartData" chart-labels="vm.chartLabels">
+      </canvas> 
+    </div>
+    <p ng-repeat="category in vm.categories">{{ category.name }}: {{category.totalMinutes}} Minutes accrued.</p>
   </div>
 </md-content>
