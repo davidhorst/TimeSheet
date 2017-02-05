@@ -13,16 +13,8 @@ module.exports = function(app){
   app.get('/categories/:id', categories.getCategories);
   app.post('/categories', categories.addCategory); 
 
+  // Event Routes
   app.post('/events', events.addEvent);
   app.delete('/events/:id', events.deleteEvent);
-  // Event Routes
-  // app.post('/eve/:id', questions.createAnswer);
-//   app.get('/questions/:id', questions.showQuestion);
-  
-//   // Show/Add questions
-//   app.post('/questions', questions.createQuestion);
-//   app.get('/questions/:id/answer', questions.showQuestion);
-  
-//   // like answer
-//   app.post('/answers/:id', questions.likeAnswer);
+
 };

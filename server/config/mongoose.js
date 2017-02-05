@@ -32,7 +32,7 @@ process.on( 'SIGINT', function() {
 
 fs.readdirSync( models_path ).forEach( function( file ) {
   if( reg.test( file ) ) {
-    console.log('require: ', models_path, file);
+    // console.log('require: ', models_path, file);
     require( path.join( models_path, file ) );
   }
 });

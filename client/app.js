@@ -1,6 +1,6 @@
 var app = angular.module('app', ['ngRoute', 'ngMaterial', 'chart.js']);
 
-app.config(function ($routeProvider) {
+app.config(function ($routeProvider, $locationProvider) {
   $routeProvider
     .when('/',{
         templateUrl: 'dashboard/dashboard.html',
@@ -19,6 +19,9 @@ app.config(function ($routeProvider) {
     .otherwise({
       redirectTo: '/'
     });
+
+    $locationProvider.html5Mode(true);
+
 });
 
 app.config(function($compileProvider) {

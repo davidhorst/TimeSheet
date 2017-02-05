@@ -19,6 +19,11 @@ app.use(bodyParser.json());
 require( './server/config/mongoose.js');
 require( './server/config/routes.js')(app);
 
+app.all('/*', function(req, res, next) {
+    // Just send the index.html for other files to support HTML5Mode
+    res.sendFile('client/index.html', { root: __dirname });
+});
+
 
 // Start Server
 app.listen( port, function() {

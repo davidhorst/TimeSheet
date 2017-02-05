@@ -61,7 +61,7 @@ function categorydataservice($http) {
         }
 
         function getCategoriesFailed(error){
-            console.log('Get Categories failed with  ' + error);
+            console.log('Get Categories failed with  ', error);
         }
     }
 
@@ -73,15 +73,18 @@ function categorydataservice($http) {
         if (!eventObj._category){
             eventObj._category = self.categories[self.currentCategory]._id
         }
+        console.log("at service: ", eventObj)
+
         return $http.post(`events/`, eventObj)
             .then(addEventComplete)
             .catch(addEventFailed);
         
         function addEventComplete(response) {
+            console.log("event submit success response: ", response);
             return response.data;
         }
         function addEventFailed(error) {
-            console.log('add event Failed with: ' + error);
+            console.log('add event Failed with: ', error);
         }
     }
 
@@ -91,6 +94,7 @@ function categorydataservice($http) {
             .catch(deleteEventFailed);
         
         function deleteEventComplete(response) {
+            console.log("event submit success response: ", response);
             return response.data;
         }
         function deleteEventFailed(error) {

@@ -40,7 +40,6 @@
 
     // Private Methods
     function activate(){
-      console.log("looking for existing account");
       if(!accountsdataervice.getUser()){
         $location.url('/login');
       }

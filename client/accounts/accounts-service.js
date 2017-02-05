@@ -9,11 +9,8 @@ function accountsdataservice($http) {
 
     return {
         getUser: getUser,
-        // addUser: addUser,
         login: login,
         createAccount: createAccount,
-        // getGame: getGame,
-        // addGame: addGame
     };
 
 
@@ -29,7 +26,6 @@ function accountsdataservice($http) {
     }
     
     function login(userObj) {
-        console.log("uerObj:", userObj);
         return $http.post(`/login/`, userObj)
             .then(loginComplete)
             .catch(loginFailed);

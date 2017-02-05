@@ -28,18 +28,13 @@ function AccountsController(){
 
   this.login = function(req, res){
     // req.body === user object
-    console.log(req.body)    
     User.findOne( req.body , function(err, user){
-      console.log("findOne error:", err);
-      console.log("findOne response: ", user);
       if (err) {
         res.json({err: err, success: null});
       } else {
         if (!user) {
           user = new User(req.body)
           user.save(function(err, success){
-            console.log("User Creation error: ", err);
-            console.log("User creation success: ", success);
             if (err) {
               res.json({err: err, success: null});
             } else {

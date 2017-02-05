@@ -14,6 +14,7 @@
   "dependencies": {
     "angular": "^1.5.8",
     "angular-route": "^1.5.8",
-    "angular-material": "^1.1.1"
+    "angular-material": "^1.1.1",
+    "moment": "momentjs#^2.17.1"
   }
 }

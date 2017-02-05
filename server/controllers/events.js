@@ -4,55 +4,17 @@ var mongoose = require('mongoose');
 var Category = mongoose.model('Category');
 var Event = mongoose.model('Event');
 
-function CategoryController(){
-
-  // this.getCategories = function(req, res){
-  //   console.log("params id:", req.params.id)
-  //   Category.find({_user: req.params.id}, function(err, categories){
-  //     if ( err ){
-  //       res.json({err: err, success: null});
-  //     } else {
-  //       res.json({err: null, success: categories});
-  //     };
-  //   });
-  // }; //End this.index
-
-  // this.getCategory = function(req, res){
-  //   Category.findOne( req.body , function(err, user){
-  //     console.log(err, user);
-  //     if ( err ){
-  //       res.json({err: err, success: null});
-  //     } else {
-  //       res.json({err: null, success: users});
-  //     };
-  //   });
-  // }; //End this.index
+function EventsController(){
 
   this.addEvent = function(req, res){
-    console.log("add event body", req.body)
+    // If req.body._id exists, start the update process
     if (req.body._id){
-      console.log("starting update process");
-      Event.findById(req.body._id, function(err, event){
-        if (err){
-          console.log(err)
-          return res.json({err: err, success: null})
-        } else {
-          event.description = req.body.description;
-          event.date = req.body.date;
-          event.hours = req.body.hours;
-          event.minutes = req.body.minutes;
-          event.save(function(err, updatedEvent){
-            if (err){
-              console.log(err)
-              return res.json({err:err, success: null})
-            } else {
-              return res.json({err:null, success: event})
-            }
-          })
-        }
+      Event.findByIdAndUpdate(req.body._id, req.body, {new: true}, function(err, updatedEvent){
+        if (err){ return res.json({err:err, success: null})}
+        return res.json({err:null, success:updatedEvent})
       })
     } else {
-
+      // Create a new event if exisiting ID isnt in req.body
       Category.findOne({_id: req.body._category }, function(err, category){
         var event = new Event(req.body);
         event.save(function(err, newEvent){
@@ -65,17 +27,17 @@ function CategoryController(){
                 return res.json({err: err, success: null});
               } else {
                 return res.json({err: null, success: newEvent});
-              }; // end question save error catch
-            }); //end question save
-          };// end answer save error catch
-        }); // end answer save
-      }); // end find question process
-    }; // End 
-  }// end add event
+              }; // end category save error catch
+            }); //end category save
+          };// end  add event to category
+        }); // end event save
+      }); // end find category process
+    }; // End create new event process 
+  }// end addEvent function
 
   this.deleteEvent = function(req, res){
+    
     var eventID = req.params.id;
-    console.log("delete event ID at server: ", eventID);
 
     Event.findById(eventID, function(err, event) {
       if (err) {
@@ -84,7 +46,7 @@ function CategoryController(){
         var categoryID = event._category
         event.remove(function(err){
           if (err) throw err;
-          Category.findById(categoryID, function(err, category){
+          Category.findById(categoryID, function(err, category){ 
             if (err) throw err;
             var index = category._events.indexOf(eventID)
             if (index > -1){
@@ -99,11 +61,8 @@ function CategoryController(){
           })
         })
       }
-
-      // we have deleted the user
-      console.log('User deleted!');
     });
-      }
-}; // End AccountsController
+  }
+}; // End EventsController
 
-module.exports = new CategoryController();
+module.exports = new EventsController();

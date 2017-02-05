@@ -123,12 +123,14 @@
         eventObj.minutes = 0;
       }
       eventObj.totalMinutes = eventObj.minutes + eventObj.hours * 60;
+      console.log("total Minutes: ", eventObj.totalMinutes);
 
       return categorydataservice.addEvent(eventObj)
         .then(addEventSuccess)
         .catch(addEventFail)
         
       function addEventSuccess(response){
+        console.log("after event add success", eventObj);
         if (eventObj._id){
           for(var i = 0; i < vm.events.length; i++){
             if(vm.events[i]._id == eventObj._id){
@@ -141,7 +143,7 @@
       }
 
       function addEventFail(response){
-        pass;  
+        console.log("event add failure", response);
       }
     }
 
