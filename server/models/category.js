@@ -12,4 +12,9 @@ var CategorySchema = new Schema({
       minlength:5},
   }, {timestamps: true});
 
+  CategorySchema.pre('remove', function(next) {
+    Event.remove({_category: this._id}).exec();
+    next();
+});
+
 module.exports = mongoose.model('Category', CategorySchema);

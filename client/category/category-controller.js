@@ -8,19 +8,24 @@
   categoryController.$inject = [
     'categorydataservice',
     'accountsdataservice', 
-    '$mdDialog'
+    '$mdDialog',
+    '$location',
+    '$route', 
   ];
 
   function categoryController(
     categorydataservice, 
     accountsdataservice, 
-    $mdDialog) {
+    $mdDialog,
+    $location,
+    $route) {
 
     var vm = this;
     
     vm.showEventDialog = showEventDialog;
     vm.showTimeDialog = showTimeDialog;
     vm.showConfirmDelete = showConfirmDelete;
+    vm.showConfirmDeleteCategory = showConfirmDeleteCategory;
     vm.addEvent = addEvent
     vm.getEvents = getEvents
     vm.event = {};
@@ -80,6 +85,28 @@
       return categorydataservice.deleteEvent(vm.events[index]._id)
         .then(function(data){
           vm.events.splice(index, 1);
+        })
+    }, function() {
+      console.log('no');
+    });
+  };
+
+  function showConfirmDeleteCategory(ev) {
+    // Appending dialog to document.body to cover sidenav in docs app
+    var confirm = $mdDialog.confirm()
+          .title('Are you sure you want to delete this category?')
+          .textContent('This will delete all events logged in this category')
+          .ariaLabel('Delete category')
+          .targetEvent(ev)
+          .ok('Please do it!')
+          .cancel('No, nvmd.');
+
+    $mdDialog.show(confirm).then(function() {
+      console.log( 'yes, please');
+      return categorydataservice.deleteCategory()
+        .then(function(data){
+            $location.url('/dashboard');
+            $route.reload();
         })
     }, function() {
       console.log('no');

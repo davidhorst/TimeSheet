@@ -27,3 +27,5 @@ app.config(function ($routeProvider, $locationProvider) {
 app.config(function($compileProvider) {
     $compileProvider.preAssignBindingsEnabled(true);
 });
+
+moment.duration.fn.format.defaults.trim = false

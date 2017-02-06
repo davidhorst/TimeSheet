@@ -17,6 +17,7 @@ function categorydataservice($http) {
         getEvents: getEvents,
         addEvent: addEvent,
         deleteEvent: deleteEvent,
+        deleteCategory: deleteCategory,
     };
 
 
@@ -98,6 +99,20 @@ function categorydataservice($http) {
             return response.data;
         }
         function deleteEventFailed(error) {
+            console.log('Delete event Failed with: ' + error);
+        }
+    }
+
+    function deleteCategory() {
+        return $http.delete(`categories/${self.categories[self.currentCategory]._id}`)
+            .then(deleteCategoryComplete)
+            .catch(deleteCategoryFailed);
+        
+        function deleteCategoryComplete(response) {
+            console.log("event submit success response: ", response);
+            return response.data;
+        }
+        function deleteCategoryFailed(error) {
             console.log('Delete event Failed with: ' + error);
         }
     }

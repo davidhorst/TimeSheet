@@ -12,6 +12,7 @@ module.exports = function(app){
   // Category Routes
   app.get('/categories/:id', categories.getCategories);
   app.post('/categories', categories.addCategory); 
+  app.delete('/categories/:id', categories.deleteCategory);
 
   // Event Routes
   app.post('/events', events.addEvent);

@@ -48,6 +48,13 @@ function CategoryController(){
     }); // end user save process
   }; // End this.login
 
+  this.deleteCategory = function(req, res){
+      Category.findByIdAndRemove(req.params.id, function(err, category){
+          if (err) throw err
+          return res.json({err:null, succcess:category})
+      })
+  }
+
 }; // End AccountsController
 
 module.exports = new CategoryController();
