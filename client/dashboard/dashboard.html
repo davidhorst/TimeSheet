@@ -12,6 +12,7 @@
         chart-data="vm.chartData" chart-labels="vm.chartLabels">
       </canvas> 
     </div>
-    <p ng-repeat="category in vm.categories">{{ category.name }}: {{category.totalMinutes}} Minutes accrued.</p>
+    <p>Total Time: {{ vm.categories.formattedTime }}</p>
+    <p ng-repeat="category in vm.categories">{{ category.name }}: {{category.formattedTime}}</p>
   </div>
 </md-content>
