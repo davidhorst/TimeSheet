@@ -32,6 +32,7 @@
 
     function getEvents(){
       vm.events = categorydataservice.getEvents();
+      console.log(vm.events)
     }
     vm.getEvents();
 

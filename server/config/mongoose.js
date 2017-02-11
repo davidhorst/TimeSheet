@@ -6,7 +6,7 @@ var mongoose      = require('mongoose'),
     models_path   = path.join( __dirname, "../models"),
     reg           = new RegExp( ".js$", "i" ),
     // dbURI         = 'mongodb://localhost/timeSheet';
-    dbURI         = 'mongodb://10.1.10.104/timeSheet';
+    dbURI         = 'mongodb://10.1.10.95/timeSheet';
 
 
 mongoose.connect( dbURI );

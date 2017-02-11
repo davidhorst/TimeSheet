@@ -1,24 +1,22 @@
-<md-toolbar layout="row" layout-align="start center" class="md-theme-indigo">
+<md-toolbar layout="row" class="md-theme-indigo">
   <md-button ng-click="accounts.toggleMenu()"
     class="md-icon-button" hide-gt-md>
     <i class="material-icons">menu</i>
   </md-button>
   <h1 class="md-toolbar-tools">{{ accounts.toolbarHeading }}</h1>
 </md-toolbar>
-<md-content layout="column" layout-padding layout-align="top center">
+<md-content layout="column" layout-padding flex layout-align="top center">
     <div layout="row">
         <md-button class="md-raised md-primary" ng-click="vm.showEventDialog($event)">Log an Event</md-button>
-        <md-button class="md-raised md-primary" ng-click="vm.showConfirmDeleteCategory($event)">Delete Category</md-button>
+        <md-button class="md-raised md-warn md-hue-2" ng-click="vm.showConfirmDeleteCategory($event)">Delete Category</md-button>
     </div>
-    <div layout="row" layout-fill layout-align="center center">
+    <div flex layout="row" layout-fill layout-align="center top">
         <md-list flex-gt-sm="75" flex ng-cloak>
             <md-divider flex></md-divider>
-            <md-list-item flex class="secondary-button-padding" ng-repeat="event in vm.events" ng-click="null">
+            <md-list-item flex class="md-2-line secondary-button-padding" ng-repeat="event in vm.events" ng-click="null">
                 <div flex class="md-list-item-text" layout="column">
-                    <p flex-xs="100">{{ event.description }}</p>
-                    <span flex></span>
-                    <p flex-xs="100">Duration (HH:MM): {{ event.hours }}:{{ event.minutes }}</p>
-                    <span flex hide-gt-xs>
+                    <h3> {{ event.description }}</h3>
+                    <p>{{event.date | amDateFormat:'MM/DD/YYYY'}} - {{event.totalMinutes | amDurationFormat : 'minute' }}</p>
                 </div>
                 <md-button ng-click="vm.showEventDialog($event, $index)" aria-label="edit" class="md-icon-button">
                     <md-icon md-font-set="material-icons"> edit </md-icon>

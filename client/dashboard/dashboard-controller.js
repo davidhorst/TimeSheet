@@ -62,6 +62,12 @@
         // vm.chartData.push(vm.categories[i].formattedTime);
         vm.chartData.push(moment.duration(categories[i].totalMinutes, "minutes"));
         tempTotal += categories[i].totalMinutes;
+        vm.categories.totalMinutes = tempTotal;
+        vm.categories.duration = moment.duration(tempTotal, "minutes");
+        if (vm.categories.duration._data.days > 0){
+          vm.categories.duration._data.hours = vm.categories.duration._data.hours + vm.categories.duration._data.days  * 24;
+          vm.categories.duration._data.days = 0; 
+        }
         vm.categories.formattedTime = moment.duration(tempTotal, "minutes").format("h:mm");
       }
       vm.chartLabels.push("Remaining Time");

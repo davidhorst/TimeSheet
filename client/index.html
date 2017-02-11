@@ -18,13 +18,15 @@
   <body
     ng-app="app"
     ng-cloak 
-    ng-controller="AccountsController as accounts">
-      <div layout="row" style="height:100%;" ng-show="accounts.username">
+    ng-controller="AccountsController as accounts"
+    layout="column">
+      <div layout="row" flex ng-show="accounts.username">
         <md-sidenav
           class="md-sidenav-left"
           md-component-id="left"
           md-is-locked-open="$mdMedia('gt-md')"
-          md-whiteframe="4">
+          md-whiteframe="4"
+          layout="column">
 
           <md-toolbar class="md-theme-indigo">
             <h1 class="md-toolbar-tools" ng-click="accounts.goHome()">Time Keeper</h1>
@@ -48,7 +50,7 @@
             </md-list>
           </md-content>
         </md-sidenav>
-        <ng-view flex style="height: 100%;">
+        <ng-view flex layout="column">
           View content
         </ng-view>
       </div>
@@ -57,14 +59,15 @@
   
   </body>
 
-  <script src="angular/angular.js" charset="utf-8"></script>
-  <script src="angular-route/angular-route.js" charset="utf-8"></script>
-  <script src="angular-aria/angular-aria.js"></script>
-  <script src="angular-animate/angular-animate.js"></script>
-  <script src="angular-material/angular-material.js"></script>
+  <script src="angular/angular.min.js" charset="utf-8"></script>
+  <script src="angular-route/angular-route.min.js" charset="utf-8"></script>
+  <script src="angular-aria/angular-aria.min.js"></script>
+  <script src="angular-animate/angular-animate.min.js"></script>
+  <script src="angular-material/angular-material.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.3.0/Chart.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-chart.js/1.0.3/angular-chart.min.js"></script> 
   <script src="moment/min/moment.min.js"></script>
+  <script src="angular-moment/angular-moment.min.js"></script>
   <script src="moment-duration-format/lib/moment-duration-format.js"></script> 
   <script src="file-saver/FileSaver.min.js"></script>      
   <!-- Local js stuff /-->

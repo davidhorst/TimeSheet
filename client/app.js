@@ -1,4 +1,4 @@
-var app = angular.module('app', ['ngRoute', 'ngMaterial', 'chart.js']);
+var app = angular.module('app', ['ngRoute', 'ngMaterial', 'chart.js', 'angularMoment']);
 
 app.config(function ($routeProvider, $locationProvider) {
   $routeProvider
@@ -20,12 +20,15 @@ app.config(function ($routeProvider, $locationProvider) {
       redirectTo: '/'
     });
 
-    $locationProvider.html5Mode(true);
+    // $locationProvider.html5Mode(true);
 
 });
 
 app.config(function($compileProvider) {
     $compileProvider.preAssignBindingsEnabled(true);
 });
+
+  moment.relativeTimeThreshold('m', 59);
+  moment.relativeTimeThreshold('h', 23);
 
 moment.duration.fn.format.defaults.trim = false
