@@ -17,6 +17,7 @@
       </canvas> 
     </div>
     <p>Total Time: {{ vm.categories.formattedTime }}</p>
+    <p>Remaining Time: {{ vm.categories.remainingTime }}</p>
     <p ng-repeat="category in vm.categories">
       {{ category.name }}: {{ category.formattedTime }}
 

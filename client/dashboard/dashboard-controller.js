@@ -66,6 +66,8 @@
         vm.categories.totalMinutes = tempTotal;
         vm.categories.duration = moment.duration(tempTotal, "minutes");
         vm.categories.formattedTime = humanizeDuration(vm.categories.duration._milliseconds, { units: ['h', 'm'] })
+        vm.categories.remainingTime = moment.duration(7200-tempTotal, "minutes")
+        vm.categories.remainingTime = humanizeDuration(vm.categories.remainingTime._milliseconds, { units: ['h', 'm']})
       }
       vm.chartLabels.push("Remaining Time");
       vm.chartData.push(moment.duration(7200-tempTotal, "minutes"));
