@@ -57,23 +57,19 @@
       console.log(categories);
       var tempTotal = 0;
       for (var i = 0; i < categories.length; i++){
-        vm.categories[i].formattedTime = moment.duration(vm.categories[i].totalMinutes, "minutes").format("h:mm");
+        vm.categories[i].formattedTime = moment.duration(vm.categories[i].totalMinutes, "minutes")
+        vm.categories[i].formattedTime = humanizeDuration(vm.categories[i].formattedTime, {units: ['h', 'm']})
         vm.chartLabels.push(categories[i].name);
         // vm.chartData.push(vm.categories[i].formattedTime);
         vm.chartData.push(moment.duration(categories[i].totalMinutes, "minutes"));
         tempTotal += categories[i].totalMinutes;
         vm.categories.totalMinutes = tempTotal;
         vm.categories.duration = moment.duration(tempTotal, "minutes");
-        if (vm.categories.duration._data.days > 0){
-          vm.categories.duration._data.hours = vm.categories.duration._data.hours + vm.categories.duration._data.days  * 24;
-          vm.categories.duration._data.days = 0; 
-        }
-        vm.categories.formattedTime = moment.duration(tempTotal, "minutes").format("h:mm");
+        vm.categories.formattedTime = humanizeDuration(vm.categories.duration._milliseconds, { units: ['h', 'm'] })
       }
       vm.chartLabels.push("Remaining Time");
-      // vm.chartData.push(moment.duration(7200-tempTotal, "minutes").format("h:mm"));
       vm.chartData.push(moment.duration(7200-tempTotal, "minutes"));
-      console.log("completed chart data: ", vm.chartData) 
+      console.log("completed chart data: ", vm.categories) 
     }
 
     function printToCSV(){

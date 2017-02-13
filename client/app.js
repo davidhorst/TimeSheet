@@ -30,5 +30,5 @@ app.config(function($compileProvider) {
 
   moment.relativeTimeThreshold('m', 59);
   moment.relativeTimeThreshold('h', 23);
-
+  
 moment.duration.fn.format.defaults.trim = false
