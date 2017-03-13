@@ -75,7 +75,7 @@
     }
 
     function printToCSV(){
-      var csvData = "Date, Duration, Project, Description\r\n";
+      var csvData = "ID, Date, Duration, Project, Description\r\n";
       
       function minuteFormatter(minute){
         if(minute < 10){
@@ -87,9 +87,11 @@
       for (var i = 0; i < vm.categories.length; i++){
         if (vm.categories[i]._events.length > 0){
           var categoryName = vm.categories[i].name;
-          var row = "";
           for (var p = 0; p < vm.categories[i]._events.length; p++){
-            row +=  moment(vm.categories[i]._events[p].date).format('MM/DD/YYYY');
+            var row = "";
+            row += vm.categories[i]._events[p]._id;
+            row += ','; 
+            row += moment(vm.categories[i]._events[p].date).format('MM/DD/YYYY');
             row += ',';
             row += vm.categories[i]._events[p].hours + ":" + minuteFormatter(vm.categories[i]._events[p].minutes);
             row += ',';
