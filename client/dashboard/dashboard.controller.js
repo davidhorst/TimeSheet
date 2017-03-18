@@ -1,16 +1,16 @@
 (function() {
   'use strict';
   angular.module('app')
-  .controller('dashboardController', dashboardController);
+  .controller('DashboardController', DashboardController);
 
-  dashboardController.$inject = [
-    'categorydataservice', 
-    'accountsdataservice',
+  DashboardController.$inject = [
+    'sessionservice',
+    'categoryservice'
     ];
 
-  function dashboardController(
-    categorydataservice, 
-    accountsdataservice) {
+  function DashboardController(
+    sessionservice,
+    categoryservice) {
 
     var vm = this;
 
@@ -23,28 +23,13 @@
 
     var chartOptions = {
         scales: {
-            // xAxes: [{
-            //     type: 'time',
-            //     unit: 'hour',
-            //     time: {
-            //       format: false,
-            //       unit: false,
-            //       displayFormats: {
-            //           'millisecond': 'HH:mm:ss',
-            //           'second': 'HH:mm:ss',
-            //           'minute': 'HH:mm:ss',
-            //           'hour': 'HH:mm:ss'
-            //       },
-            //       // Sets the display format used in tooltip generation
-            //       tooltipFormat: ''
-            //     }
-            // }]
         }
     };
 
     function activate(){
-      var userID = accountsdataservice.getUser()._id
-      return categorydataservice.getCategories(userID)
+      console.log("activate dashboard")
+      var userID = sessionservice.getUserID()
+      return categoryservice.getCategories(userID)
         .then(function(returnedData){
           vm.categories = returnedData;
           vm.createChartData(vm.categories);

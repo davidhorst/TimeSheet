@@ -1,14 +1,14 @@
 angular
   .module('app')
-  .factory('accountsdataservice', accountsdataservice);
+  .factory('sessionservice', sessionservice);
 
-accountsdataservice.$inject = ['$http'];
+sessionservice.$inject = ['$http'];
 
-function accountsdataservice($http) {
+function sessionservice($http) {
     var self = this;
 
     return {
-        getUser: getUser,
+        getUserID: getUserID,
         login: login,
         createAccount: createAccount,
     };
@@ -16,15 +16,21 @@ function accountsdataservice($http) {
 
     self.user = {};
 
-    function getUser() {
-        if (!self.user){
+    function getUserID() {
+        if (!localStorage.getItem("user_id")){
             return null
         } else {
-            return self.user
+            console.log("found user")
+            return localStorage.getItem("user_id")
         }
 
     }
     
+    function logout(){
+        localStorage.removeItem("user_name")
+        localStorage.removeItem("user_id")
+    }
+
     function login(userObj) {
         return $http.post(`/login/`, userObj)
             .then(loginComplete)
@@ -34,7 +40,9 @@ function accountsdataservice($http) {
             // console.log("response.data: ", response.data.success.username);
             if (response.data.success){
                 self.user = response.data.success;
-                // console.log(self.user);
+                localStorage.setItem("user_name", self.username)
+                localStorage.setItem("user_id", self.user._id)
+                console.log(localStorage.getItem("user_id"));
             };
             return response.data.success;
         }

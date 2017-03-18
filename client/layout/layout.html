@@ -1,0 +1,57 @@
+  <div id="shell" layout="row" style="min-height: 100vh;">
+
+    <section id="sidenav" layout="column">
+        <md-sidenav
+          class="md-sidenav-left"
+          md-component-id="left"
+          md-is-locked-open="$mdMedia('gt-md')"
+          md-whiteframe="4"
+          layout="column">
+
+          <md-toolbar class="md-theme-indigo">
+            <md-button ng-click="layout.goHome()">Time Keeper</md-button>
+          </md-toolbar>
+          <md-content>
+            <md-list>
+              <md-list-item class="md-1-line" ng-repeat="category in layout.categories" ui-sref="index.dashboard.category({index: $index})">
+                <div class="md-list-item-text" layout="column">
+                  <h3>{{ category.name }}</h3>
+                </div>
+              </md-list-item>
+              <md-list-item class="md-1-line" ng-click="layout.createCategory($event)">
+                <i class="material-icons">create</i>
+                <div class="md-list-item-text" layout="column">
+                  <h3>Add New Category</h3>
+                </div>
+              </md-list-item>
+            </md-list>
+          </md-content>
+        </md-sidenav>
+    </section>
+    
+    <section id="body" layout="column" layout-fill>
+  
+      <div id="topnav" layout="row" ui-view="topnav">
+       <md-toolbar layout="row" layout-align="start center" class="md-theme-indigo">
+          <md-button ng-click="accounts.toggleMenu()"
+            class="md-icon-button" hide-gt-md>
+            <i class="material-icons">menu</i>
+          </md-button>
+          <h1 class="md-toolbar-tools">{{ dashboard.toolbarHeading }}</h1>
+          <md-menu md-position-mode="target-right bottom">
+            <md-button ng-click="$mdOpenMenu($event)" class="md-icon-button" aria-label="Open sample menu">
+              <md-icon><i class="material-icons">more_vert</i></md-icon>
+            </md-button>
+            <md-menu-content>
+              <md-menu-item><md-button ng-click="layout.printToCSV()">Export to CSV</md-button></md-menu-item>
+              <md-menu-item><md-button ng-click="layout.logout()">Logout</md-button></md-menu-item>
+            </md-menu-content>
+          </md-menu>
+       </md-toolbar>
+      </div>
+    
+      <div id="content" layout="column" ui-view=""></div>
+  
+    </section>
+
+  </div>

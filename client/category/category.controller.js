@@ -3,35 +3,36 @@
 
   angular.module('app')
 
-  .controller('categoryController', categoryController);
+  .controller('CategoryController', CategoryController);
 
-  categoryController.$inject = [
-    'categorydataservice',
-    'accountsdataservice', 
+  CategoryController.$inject = [
+    'categoryservice',
+    'sessionservice', 
     '$mdDialog',
-    '$location',
-    '$route', 
+    '$stateParams'
   ];
 
-  function categoryController(
-    categorydataservice, 
-    accountsdataservice, 
+  function CategoryController(
+    categoryservice, 
+    sessionservice, 
     $mdDialog,
-    $location,
-    $route) {
+    $stateParams) {
 
     var vm = this;
     
     vm.showEventDialog = showEventDialog;
-    vm.showTimeDialog = showTimeDialog;
     vm.showConfirmDelete = showConfirmDelete;
     vm.showConfirmDeleteCategory = showConfirmDeleteCategory;
     vm.addEvent = addEvent
     vm.getEvents = getEvents
     vm.event = {};
+    vm.events = {};
 
     function getEvents(){
-      vm.events = categorydataservice.getEvents();
+      return categoryservice.getEvents($stateParams.index)
+        .then(function(events){
+          vm.events = events;
+        });
       console.log(vm.events)
     }
     vm.getEvents();
@@ -55,21 +56,6 @@
         // vm.status = 'You cancelled the dialog.';
       });
     };
-    
-    function showTimeDialog(ev) {
-    $mdDialog.show({
-      controller: DialogController,
-      templateUrl: 'tabDialog.tmpl.html',
-      parent: angular.element(document.body),
-      targetEvent: ev,
-      clickOutsideToClose:true
-    })
-        .then(function(answer) {
-          $scope.status = 'You said the information was "' + answer + '".';
-        }, function() {
-          $scope.status = 'You cancelled the dialog.';
-        });
-    };
 
   function showConfirmDelete(ev, index) {
     // Appending dialog to document.body to cover sidenav in docs app
@@ -83,8 +69,8 @@
 
     $mdDialog.show(confirm).then(function() {
       console.log( 'yes, please');
-      return categorydataservice.deleteEvent(vm.events[index]._id)
-        .then(function(data){
+      return categoryservice.deleteEvent(vm.events[index]._id)
+        .then(function(){
           vm.events.splice(index, 1);
         })
     }, function() {
@@ -104,8 +90,8 @@
 
     $mdDialog.show(confirm).then(function() {
       console.log( 'yes, please');
-      return categorydataservice.deleteCategory()
-        .then(function(data){
+      return categoryservice.deleteCategory()
+        .then(function(){
             $location.url('/dashboard');
             $route.reload();
         })
@@ -119,8 +105,10 @@
       $scope.event = {};
       $scope.event.date = new Date();
       if (editEvent){
+        // if an event was passed into the dialog, load it into the scope
         $scope.event = editEvent;
         if ($scope.event.date){
+          // if the date is a string, convert it
           $scope.event.date = new Date($scope.event.date);
         }
 
@@ -141,8 +129,9 @@
     }
 
     function addEvent(eventObj){
+      console.log("event obj at start of add event", eventObj)
       if (!eventObj._user){
-        eventObj._user = accountsdataservice.getUser()._id
+        eventObj._user = sessionservice.getUserID()
       };
       if (!eventObj.hours){
         eventObj.hours = 0;
@@ -153,7 +142,7 @@
       eventObj.totalMinutes = eventObj.minutes + eventObj.hours * 60;
       console.log("total Minutes: ", eventObj.totalMinutes);
 
-      return categorydataservice.addEvent(eventObj)
+      return categoryservice.addEvent(eventObj, $stateParams.index)
         .then(addEventSuccess)
         .catch(addEventFail)
         

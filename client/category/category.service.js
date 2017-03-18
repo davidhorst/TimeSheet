@@ -1,29 +1,28 @@
 angular
   .module('app')
-  .factory('categorydataservice', categorydataservice);
+  .factory('categoryservice', categoryservice);
 
-categorydataservice.$inject = ['$http'];
+categoryservice.$inject = ['$http', '$q'];
 
-function categorydataservice($http) {
+function categoryservice($http, $q) {
 
     var self = this;
-    self.categories = {}; 
-    self.currentCategory = null; // index of current category
+    // self.currentCategory = null; // index of current category
 
     return {
         getCategories: getCategories,
         addCategory: addCategory,
-        setCategory: setCategory,
+        // setCategory: setCategory,
         getEvents: getEvents,
         addEvent: addEvent,
         deleteEvent: deleteEvent,
-        deleteCategory: deleteCategory,
+        // deleteCategory: deleteCategory,
     };
 
 
-    function setCategory(index){
-        self.currentCategory = index;
-    }
+    // function setCategory(index){
+    //     self.currentCategory = index;
+    // }
 
     function includeMinuteTotals(categoriesArr){
         for (var i = 0; i < categoriesArr.length; i++){
@@ -66,14 +65,24 @@ function categorydataservice($http) {
         }
     }
 
-    function getEvents(){
-        return self.categories[self.currentCategory]._events
+    function getEvents(index){
+        var index = index
+        if (self.categories){
+          return $q.resolve(self.categories[index]._events)
+        } else {
+          return getCategories(localStorage.getItem('user_id'))
+            .then(function(){
+              return self.categories[index]._events
+            })
+        }
     }
 
-    function addEvent(eventObj) {
+    function addEvent(eventObj, categoryIndex) {
+
         if (!eventObj._category){
-            eventObj._category = self.categories[self.currentCategory]._id
+            eventObj._category = self.categories[categoryIndex]._id
         }
+        
         console.log("at service: ", eventObj)
 
         return $http.post(`events/`, eventObj)
@@ -103,17 +112,17 @@ function categorydataservice($http) {
         }
     }
 
-    function deleteCategory() {
-        return $http.delete(`categories/${self.categories[self.currentCategory]._id}`)
-            .then(deleteCategoryComplete)
-            .catch(deleteCategoryFailed);
+    // function deleteCategory() {
+    //     return $http.delete(`categories/${self.categories[self.currentCategory]._id}`)
+    //         .then(deleteCategoryComplete)
+    //         .catch(deleteCategoryFailed);
         
-        function deleteCategoryComplete(response) {
-            console.log("event submit success response: ", response);
-            return response.data;
-        }
-        function deleteCategoryFailed(error) {
-            console.log('Delete event Failed with: ' + error);
-        }
-    }
+    //     function deleteCategoryComplete(response) {
+    //         console.log("event submit success response: ", response);
+    //         return response.data;
+    //     }
+    //     function deleteCategoryFailed(error) {
+    //         console.log('Delete event Failed with: ' + error);
+    //     }
+    // }
 }

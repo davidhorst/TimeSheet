@@ -1,34 +1,32 @@
-var app = angular.module('app', ['ngRoute', 'ngMaterial', 'chart.js', 'angularMoment']);
+var app = angular.module('app', ['ui.router', 'ngMaterial', 'chart.js', 'angularMoment']);
 
-app.config(function ($routeProvider, $locationProvider) {
-  $routeProvider
-    .when('/',{
-        templateUrl: 'dashboard/dashboard.html',
-        controller:  'dashboardController',
-        controllerAs: 'vm',
-    })
-    .when('/login',{
-        templateUrl: 'accounts/accounts.html'
-    })
-    .when('/category',{
-        templateUrl: 'category/category.html',
-        controller:  'categoryController',
-        controllerAs: 'vm',
-    })
 
-    .otherwise({
-      redirectTo: '/'
+// app.config(function($compileProvider) {
+//     $compileProvider.preAssignBindingsEnabled(true);
+// });
+
+app.run(runBlock)
+
+runBlock.$inject = ['sessionservice', '$state', '$rootScope']
+
+function runBlock(sessionservice, $state, $rootScope){
+
+     console.log("check for user at run block", localStorage.getItem("user_id"))   
+     if (!localStorage.getItem("user_id")){
+         console.log("no user")
+         $state.go('login')
+     } else {
+        //  localStorage.removeItem("user_id")
+        //  console.log("user")
+         $state.go('index.dashboard')
+     }
+     
+    $rootScope.$on('$stateChangeStart', function(event, toState, toStateParams) {
+        console.log("toState", toState)
     });
+};
 
-    // $locationProvider.html5Mode(true);
-
-});
-
-app.config(function($compileProvider) {
-    $compileProvider.preAssignBindingsEnabled(true);
-});
-
-  moment.relativeTimeThreshold('m', 59);
-  moment.relativeTimeThreshold('h', 23);
+//   moment.relativeTimeThreshold('m', 59);
+//   moment.relativeTimeThreshold('h', 23);
   
-moment.duration.fn.format.defaults.trim = false
+// moment.duration.fn.format.defaults.trim = false

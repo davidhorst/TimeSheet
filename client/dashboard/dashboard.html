@@ -1,26 +1,17 @@
-<md-toolbar layout="row" layout-align="start center" class="md-theme-indigo">
-  <md-button ng-click="accounts.toggleMenu()"
-    class="md-icon-button" hide-gt-md>
-    <i class="material-icons">menu</i>
-  </md-button>
-  <h1 class="md-toolbar-tools">{{ accounts.toolbarHeading }}</h1>
-  <md-button ng-click="vm.printToCSV()"
-    class="md-icon-button">
-    <i class="material-icons">print</i>
-  </md-button>
-</md-toolbar>
 <md-content layout-padding>
+  <ui-view>
   <div layout="column" layout-align="top center">
     <div flex flex-gt-md="20">
       <canvas id="doughnut" class="chart chart-doughnut"
-        chart-data="vm.chartData" chart-labels="vm.chartLabels">
+        chart-data="dashboard.chartData" chart-labels="dashboard.chartLabels">
       </canvas> 
     </div>
-    <p>Total Time: {{ vm.categories.formattedTime }}</p>
-    <p>Remaining Time: {{ vm.categories.remainingTime }}</p>
-    <p ng-repeat="category in vm.categories">
+    <p>Total Time: {{ dashboard.categories.formattedTime }}</p>
+    <p>Remaining Time: {{ dashboard.categories.remainingTime }}</p>
+    <p ng-repeat="category in dashboard.categories">
       {{ category.name }}: {{ category.formattedTime }}
 
     </p>
   </div>
+  </ui-view>
 </md-content>
