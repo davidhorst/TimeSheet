@@ -9,7 +9,7 @@
     
     function routesConfig($stateProvider, $urlRouterProvider) {  
       
-      $urlRouterProvider.otherwise('/login');
+    //   $urlRouterProvider.otherwise('/login');
       
       var states = [
         {

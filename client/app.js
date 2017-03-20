@@ -10,6 +10,23 @@ app.run(runBlock)
 runBlock.$inject = ['sessionservice', '$state', '$rootScope']
 
 function runBlock(sessionservice, $state, $rootScope){
+    
+    function lsTest(){
+        var test = 'test';
+        try {
+            localStorage.setItem(test, test);
+            localStorage.removeItem(test);
+            return true;
+        } catch(e) {
+            return false;
+        }
+    }
+
+    if(lsTest() === true){
+        console.log("local storage available")
+    }else{
+        console.log("local storage unavailable")
+    }
 
      console.log("check for user at run block", localStorage.getItem("user_id"))   
      if (!localStorage.getItem("user_id")){
@@ -18,6 +35,7 @@ function runBlock(sessionservice, $state, $rootScope){
      } else {
         //  localStorage.removeItem("user_id")
         //  console.log("user")
+         console.log("user found")
          $state.go('index.dashboard')
      }
      

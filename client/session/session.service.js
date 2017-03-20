@@ -39,6 +39,7 @@ function sessionservice($http) {
         function loginComplete(response) {
             // console.log("response.data: ", response.data.success.username);
             if (response.data.success){
+                console.log("login response", response.data.success)
                 self.user = response.data.success;
                 localStorage.setItem("user_name", self.username)
                 localStorage.setItem("user_id", self.user._id)
