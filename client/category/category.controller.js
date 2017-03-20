@@ -9,14 +9,16 @@
     'categoryservice',
     'sessionservice', 
     '$mdDialog',
-    '$stateParams'
+    '$stateParams',
+    '$state'
   ];
 
   function CategoryController(
     categoryservice, 
     sessionservice, 
     $mdDialog,
-    $stateParams) {
+    $stateParams,
+    $state) {
 
     var vm = this;
     
@@ -90,10 +92,9 @@
 
     $mdDialog.show(confirm).then(function() {
       console.log( 'yes, please');
-      return categoryservice.deleteCategory()
+      return categoryservice.deleteCategory($stateParams.index)
         .then(function(){
-            $location.url('/dashboard');
-            $route.reload();
+            $state.go('index.dashboard')
         })
     }, function() {
       console.log('no');

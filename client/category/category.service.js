@@ -16,7 +16,7 @@ function categoryservice($http, $q) {
         getEvents: getEvents,
         addEvent: addEvent,
         deleteEvent: deleteEvent,
-        // deleteCategory: deleteCategory,
+        deleteCategory: deleteCategory,
     };
 
 
@@ -82,7 +82,7 @@ function categoryservice($http, $q) {
         if (!eventObj._category){
             eventObj._category = self.categories[categoryIndex]._id
         }
-        
+
         console.log("at service: ", eventObj)
 
         return $http.post(`events/`, eventObj)
@@ -112,17 +112,17 @@ function categoryservice($http, $q) {
         }
     }
 
-    // function deleteCategory() {
-    //     return $http.delete(`categories/${self.categories[self.currentCategory]._id}`)
-    //         .then(deleteCategoryComplete)
-    //         .catch(deleteCategoryFailed);
+    function deleteCategory(index) {
+        return $http.delete(`categories/${self.categories[index]._id}`)
+            .then(deleteCategoryComplete)
+            .catch(deleteCategoryFailed);
         
-    //     function deleteCategoryComplete(response) {
-    //         console.log("event submit success response: ", response);
-    //         return response.data;
-    //     }
-    //     function deleteCategoryFailed(error) {
-    //         console.log('Delete event Failed with: ' + error);
-    //     }
-    // }
+        function deleteCategoryComplete(response) {
+            console.log("event submit success response: ", response);
+            return response.data;
+        }
+        function deleteCategoryFailed(error) {
+            console.log('Delete event Failed with: ' + error);
+        }
+    }
 }
