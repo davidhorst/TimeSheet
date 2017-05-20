@@ -39,7 +39,7 @@
     activate();
 
     function createChartData(categories){
-      console.log(categories);
+      console.log("categories:", categories);
       var tempTotal = 0;
       for (var i = 0; i < categories.length; i++){
         vm.categories[i].formattedTime = moment.duration(vm.categories[i].totalMinutes, "minutes")
@@ -51,11 +51,11 @@
         vm.categories.totalMinutes = tempTotal;
         vm.categories.duration = moment.duration(tempTotal, "minutes");
         vm.categories.formattedTime = humanizeDuration(vm.categories.duration._milliseconds, { units: ['h', 'm'] })
-        vm.categories.remainingTime = moment.duration(7200-tempTotal, "minutes")
+        vm.categories.remainingTime = moment.duration(2400-tempTotal, "minutes")
         vm.categories.remainingTime = humanizeDuration(vm.categories.remainingTime._milliseconds, { units: ['h', 'm']})
       }
       vm.chartLabels.push("Remaining Time");
-      vm.chartData.push(moment.duration(7200-tempTotal, "minutes"));
+      vm.chartData.push(moment.duration(2400-tempTotal, "minutes"));
       console.log("completed chart data: ", vm.categories) 
     }
 
